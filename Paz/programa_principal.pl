@@ -3,6 +3,7 @@
 :- dynamic causas_probables/1.
 :- dynamic evidencia/1.
 
+
 % Preguntar si un efecto se presenta
 preguntar(Efecto) :- 
     not(preguntada(Efecto)),
@@ -29,12 +30,16 @@ preguntada(Efecto) :-
 
 % Iniciar diagnóstico
 iniciar :- 
-    findall(Efecto, respuesta(Efecto), EfectosObservados),
-    findall(no(Efecto), respuesta(no(Efecto)), EfectosNoObservados),
-    append(EfectosObservados, EfectosNoObservados, TodosEfectos),
-    forall(member(Efecto, TodosEfectos), assertz(preguntada(Efecto))),
-    forall(member(Efecto, EfectosObservados), assertz(evidencia(Efecto))),
-    write('Diagnóstico completado. Puede solicitar las posibles causas con "causas." y la explicación con "explicacion."'), nl.
+    retractall(respuesta(_)),
+    retractall(preguntada(_)),
+    retractall(causas_probables(_)),
+    retractall(evidencia(_)),
+    findall(Efecto, averia(_, Efecto), Efectos),
+    (   Efectos \= [] ->
+        forall(member(Efecto, Efectos), preguntar(Efecto)),
+        write('Diagnóstico completado. Puede solicitar las posibles causas con "causas." y la explicación con "explicacion."'), nl
+    ;   write('No se han proporcionado hechos observados ni se han preguntado efectos.'), nl
+    ).
 
 % Identificar causas probables y mostrarlas
 causas :- 
@@ -66,7 +71,7 @@ explicacion :-
 nueva_sesion :- 
     write('¿Desea iniciar una nueva sesión? (si/no) '),
     read(Respuesta),
-    (   Respuesta == si -> iniciar
+    (   Respuesta == si -> main
     ;   write('Sesión terminada.'), nl
     ).
 
@@ -74,7 +79,7 @@ nueva_sesion :-
 cargar_sistema :- 
     write('Ingrese el nombre del archivo del sistema a cargar (sin extensión): '),
     read(Archivo),
-    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', Archivo, Ruta),
+    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', Archivo, Ruta),
     atom_concat(Ruta, '.pl', RutaCompleta),
     consult(RutaCompleta),
     write('Archivo '), write(Archivo), write('.pl cargado correctamente.'), nl.
@@ -83,7 +88,7 @@ cargar_sistema :-
 cargar_hechos :- 
     write('Ingrese el nombre del archivo de hechos observados (sin extensión): '),
     read(Archivo),
-    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', Archivo, Ruta),
+    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', Archivo, Ruta),
     atom_concat(Ruta, '.pl', RutaCompleta),
     consult(RutaCompleta),
     write('Hechos observados cargados desde '), write(Archivo), write('.pl'), nl.
@@ -92,8 +97,8 @@ cargar_hechos :-
 main :- 
     write('Bienvenido al sistema de diagnóstico de averías.'), nl,
     write('¿Desea cargar un nuevo sistema? (si/no) '),
-    read(Respuesta),
-    (   Respuesta == si -> cargar_sistema
+    read(RespuestaSistema),
+    (   RespuestaSistema == si -> cargar_sistema
     ;   true
     ),
     write('¿Desea cargar hechos observados desde un archivo? (si/no) '),
@@ -101,5 +106,8 @@ main :-
     (   RespuestaHechos == si -> cargar_hechos
     ;   true
     ),
-    iniciar,
+    (   RespuestaSistema == no, RespuestaHechos == no ->
+        write('No se han proporcionado hechos observados ni se han preguntado efectos.'), nl
+    ;   iniciar
+    ),
     nueva_sesion.
