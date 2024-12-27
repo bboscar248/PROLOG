@@ -1,6 +1,9 @@
 % Domini dels cotxes
 % Tenim 5 subsistemes: 
 % direccio, transmissio, encesa, sistema elèctric, sistema de confort interior
+:- discontiguous averia/2.
+:- discontiguous causa/2.
+:- discontiguous relacion/2.
 
 % Subsistemes en bon funcionament
 subsistema(coche, direccion).
