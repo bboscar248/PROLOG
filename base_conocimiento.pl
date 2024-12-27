@@ -53,7 +53,7 @@ relacion(fallo_en_las_rotulas, [direccion_deficiente, ruido_al_girar]).
 relacion(fallo_en_los_bujes, [direccion_deficiente, ruido_al_girar]).
 relacion(desgastos_en_los_brazos_de_control, [direccion_deficiente]).
 relacion(presion_no_adecuada, [direccion_dura]).
-relacion(correa_de_la_floja, [direccion_dura]).
+relacion(correa_de_la_dirección_floja, [direccion_dura]).
 relacion(falta_de_lubricación_en_el_sistema_de_rótulas, [ruido_al_girar]).
 relacion(falta_de_lubricación_en_el_sistema_de_cremallera, [ruido_al_girar]).
 relacion(desgaste_de_neumaticos, [vibraciones_volante]).
