@@ -91,7 +91,6 @@ relacion(soportes_del_motor_desgastados, [vibraciones_al_conducir]).
 
 
 
-
 % Encesa
 % Avarias/efectos/observaciones del subsistema de encendido
 averia(encesa, el_motor_no_arranca).
@@ -99,7 +98,6 @@ averia(encesa, ralentí_irregular).
 averia(encesa, consumo_excesivo_combustible).
 averia(encesa, detonaciones).
 averia(encesa, perdida_de_potencia).
-averia(encesa, dificultad_arranque_en_frio).
 averia(encesa, chispa_debil).
 
 % Causas posibles de fallos del coche del subsistema de encendido
@@ -109,7 +107,6 @@ causa(encesa, bobina_de_encendido_fallida).
 causa(encesa, fallo_del_sensor_de_ciguenal).
 causa(encesa, distribuidor_defectuoso).
 causa(encesa, mezcla_combustible_pobre).
-causa(encesa, bateria_descargada).
 causa(encesa, regulador_de_voltaje_defectuoso).
 
 % Reglas que relacionan causas y efectos del subsistema de encendido
@@ -119,7 +116,6 @@ relacion(bobina_de_encendido_fallida, [el_motor_no_arranca, detonaciones, chispa
 relacion(fallo_del_sensor_de_ciguenal, [el_motor_no_arranca]).
 relacion(distribuidor_defectuoso, [detonaciones, ralentí_irregular]).
 relacion(mezcla_combustible_pobre, [consumo_excesivo_combustible, perdida_de_potencia]).
-relacion(bateria_descargada, [dificultad_arranque_en_frio]).
 relacion(regulador_de_voltaje_defectuoso, [chispa_debil]).
 
 % Sistema elèctric
