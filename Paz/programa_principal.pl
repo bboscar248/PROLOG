@@ -74,7 +74,7 @@ nueva_sesion :-
 cargar_sistema :- 
     write('Ingrese el nombre del archivo del sistema a cargar (sin extensión): '),
     read(Archivo),
-    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz', Archivo, Ruta),
+    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', Archivo, Ruta),
     atom_concat(Ruta, '.pl', RutaCompleta),
     consult(RutaCompleta),
     write('Archivo '), write(Archivo), write('.pl cargado correctamente.'), nl.
@@ -83,7 +83,7 @@ cargar_sistema :-
 cargar_hechos :- 
     write('Ingrese el nombre del archivo de hechos observados (sin extensión): '),
     read(Archivo),
-    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz', Archivo, Ruta),
+    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', Archivo, Ruta),
     atom_concat(Ruta, '.pl', RutaCompleta),
     consult(RutaCompleta),
     write('Hechos observados cargados desde '), write(Archivo), write('.pl'), nl.
