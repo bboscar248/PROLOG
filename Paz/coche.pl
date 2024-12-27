@@ -65,7 +65,7 @@ relacion(rotura_de_piezas, [coche_no_gira]).
 % Avarias/efectos/observaciones del subsistema de transmisión
 averia(transmission, dificultad_para_cambiar_marchas).
 averia(transmission, perdida_de_potencia).
-averia(transmission, ruidos_extraños_en_la_caja).
+averia(transmission, ruidos_extranos_en_la_caja).
 averia(transmission, vibraciones_al_conducir).
 averia(transmission, sobrecalentamiento).
 
@@ -84,16 +84,15 @@ relacion(nivel_bajo_de_aceite_transmision, [dificultad_para_cambiar_marchas, sob
 relacion(desgaste_sincronizadores, [dificultad_para_cambiar_marchas]).
 relacion(embrague_desgastado, [perdida_de_potencia]).
 relacion(filtro_obstruido, [sobrecalentamiento]).
-relacion(fallo_en_la_bomba_de_aceite, [ruidos_extraños_en_la_caja]).
+relacion(fallo_en_la_bomba_de_aceite, [ruidos_extranos_en_la_caja]).
 relacion(convertidor_de_par_defectuoso, [perdida_de_potencia]).
-relacion(engranajes_desgastados, [ruidos_extraños_en_la_caja]).
+relacion(engranajes_desgastados, [ruidos_extranos_en_la_caja]).
 relacion(soportes_del_motor_desgastados, [vibraciones_al_conducir]).
 
 
 
 
 % Encesa
-
 % Avarias/efectos/observaciones del subsistema de encendido
 averia(encesa, el_motor_no_arranca).
 averia(encesa, ralentí_irregular).
@@ -107,7 +106,7 @@ averia(encesa, chispa_debil).
 causa(encesa, bujias_desgastadas).
 causa(encesa, cables_de_bujias_danados).
 causa(encesa, bobina_de_encendido_fallida).
-causa(encesa, fallo_del_sensor_de_cigueñal).
+causa(encesa, fallo_del_sensor_de_ciguenal).
 causa(encesa, distribuidor_defectuoso).
 causa(encesa, mezcla_combustible_pobre).
 causa(encesa, bateria_descargada).
@@ -117,7 +116,7 @@ causa(encesa, regulador_de_voltaje_defectuoso).
 relacion(bujias_desgastadas, [el_motor_no_arranca, ralentí_irregular, chispa_debil]).
 relacion(cables_de_bujias_danados, [ralentí_irregular, perdida_de_potencia]).
 relacion(bobina_de_encendido_fallida, [el_motor_no_arranca, detonaciones, chispa_debil]).
-relacion(fallo_del_sensor_de_cigueñal, [el_motor_no_arranca]).
+relacion(fallo_del_sensor_de_ciguenal, [el_motor_no_arranca]).
 relacion(distribuidor_defectuoso, [detonaciones, ralentí_irregular]).
 relacion(mezcla_combustible_pobre, [consumo_excesivo_combustible, perdida_de_potencia]).
 relacion(bateria_descargada, [dificultad_arranque_en_frio]).
@@ -138,7 +137,7 @@ causa(sistema_electrico, cableado_danado).
 causa(sistema_electrico, bateria_anticuada).
 causa(sistema_electrico, regulador_de_voltaje_defectuoso).
 causa(sistema_electrico, conexiones_sueltas).
-causa(sistema_electrico, alternador_dañado).
+causa(sistema_electrico, alternador_danado).
 causa(sistema_electrico, cortocircuito).
 
 % Reglas que relacionan causas y efectos del subsistema eléctrico
@@ -146,7 +145,7 @@ relacion(cableado_danado, [cortocircuitos, luces_no_funcionan, sobrecalentamient
 relacion(bateria_anticuada, [bateria_descargada, sistema_no_responde]).
 relacion(regulador_de_voltaje_defectuoso, [alternador_fallido, sistema_no_responde]).
 relacion(conexiones_sueltas, [fusibles_fundidos]).
-relacion(alternador_dañado, [bateria_descargada, alternador_fallido]).
+relacion(alternador_danado, [bateria_descargada, alternador_fallido]).
 relacion(cortocircuito, [cortocircuitos, sobrecalentamiento_cables]).
 
 
