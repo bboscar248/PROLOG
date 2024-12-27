@@ -78,6 +78,7 @@ causa(transmission, desgaste_sincronizadores).
 causa(transmission, embrague_desgastado).
 causa(transmission, filtro_obstruido).
 causa(transmission, fallo_en_la_bomba_de_aceite).
+causa(transmission, soportes_del_motor_desgastados).
 
 % Reglas que relacionan causas y efectos del subsistema de transmisión
 relacion(nivel_bajo_de_aceite_transmision, [dificultad_para_cambiar_marchas, sobrecalentamiento]).
@@ -85,6 +86,8 @@ relacion(deshgaste_sincronizadores, [dificultad_para_cambiar_marchas]).
 relacion(embrague_desgastado, [perdida_de_potencia, dificultad_para_cambiar_marchas]).
 relacion(filtro_obstruido, [sobrecalentamiento]).
 relacion(fallo_en_la_bomba_de_aceite, [ruidos_extraños_en_la_caja]).
+relacion(soportes_del_motor_desgastados, [vibraciones_en_el_piso]).
+
 
 % Encesa
 % Avarias/efectos/observaciones del subsistema de encendido
@@ -100,6 +103,7 @@ causa(encesa, cables_de_bujias_danados).
 causa(encesa, bobina_de_encendido_fallida).
 causa(encesa, fallo_del_sensor_de_cigueñal).
 causa(encesa, distribuidor_defectuoso).
+causa(encesa, mezcla_combustible_pobre).
 
 % Reglas que relacionan causas y efectos del subsistema de encendido
 relacion(bujias_desgastadas, [el_motor_no_arranca, ralentí_irregular]).
@@ -107,6 +111,8 @@ relacion(cables_de_bujias_danados, [ralentí_irregular, perdida_de_potencia]).
 relacion(bobina_de_encendido_fallida, [el_motor_no_arranca, detonaciones]).
 relacion(fallo_del_sensor_de_cigueñal, [el_motor_no_arranca]).
 relacion(distribuidor_defectuoso, [detonaciones, ralentí_irregular]).
+relacion(mezcla_combustible_pobre, [consumo_excesivo_combustible, perdida_de_potencia]).
+relacion(bujias_desgastadas, [consumo_excesivo_combustible]).
 
 % Sistema elèctric
 % Avarias/efectos/observaciones del subsistema eléctrico
