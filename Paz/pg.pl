@@ -43,7 +43,8 @@ iniciar :-
             )
         )
     ),
-    format('~n~`=t~60|~nDiagnostico completado.~nPara solicitar las posibles causas y explicaciones, en la siguiente pregunta responda "no." y seguidamente escriba "causas." en caso de querer saber las causas y "explicacion." si quiere saber las explicaciones.~n~`=t~60|~n').
+    format('~n~`=t~60|~nDiagnostico completado.~nPuede solicitar las posibles causas con "causas." y la explicacion con "explicacion."~n~`=t~60|~n'),
+    esperar_comando.
 
 % Identificar causas probables y mostrarlas
 causas :- 
@@ -76,11 +77,13 @@ explicacion :-
 
 % Esperar comando del usuario
 esperar_comando :-
-    format('~nIngrese "causas." para ver las causas probables o "explicacion." para ver la explicacion del diagnostico.~n'),
+    format('~nIngrese "causas." para ver las causas probables, "explicacion." para ver la explicacion del diagnostico, o "nueva_sesion." para iniciar una nueva sesion.~n'),
     read(Comando),
     (   Comando == causas -> causas, esperar_comando
     ;   Comando == explicacion -> explicacion, esperar_comando
-    ;   true
+    ;   Comando == nueva_sesion -> nueva_sesion
+    ;   Comando == salir -> salir
+    ;   format('Comando no reconocido. Por favor, intente de nuevo.~n'), esperar_comando
     ).
 
 % Iniciar una nueva sesion
@@ -88,7 +91,7 @@ nueva_sesion :-
     format('~n¿Desea iniciar una nueva sesion? (si/no) '),
     read(Respuesta),
     (   Respuesta == si -> main
-    ;   format('~nSesion terminada.~n')
+    ;   salir
     ).
 
 % Predicado principal para iniciar el programa manualmente
@@ -112,7 +115,7 @@ main :-
     (   RespuestaHechos == si -> cargar_hechos
     ;   iniciar
     ),
-    nueva_sesion.
+    esperar_comando.
 
 % Cargar hechos observados desde un archivo
 cargar_hechos :- 
@@ -128,7 +131,6 @@ cargar_hechos :-
 % Registrar hechos observados como respuestas
 registrar_hechos_observados :-
     retractall(hecho_observado(_)), % Limpiar hechos observados anteriores
-    retractall(respuesta(_)), % Limpiar respuestas anteriores
     findall(Efecto, respuesta(Efecto), EfectosObservados),
     forall(member(Efecto, EfectosObservados), assertz(hecho_observado(Efecto))).
 
@@ -142,4 +144,9 @@ iniciar_diagnostico :-
         (   assertz(evidencia(Efecto)), assertz(preguntada(Efecto))
         )
     ),
-    format('Diagnostico completado.~nPuede solicitar las posibles causas con "causas." y la explicacion con "explicacion."~n').
+    format('Diagnostico completado.~nPuede solicitar las posibles causas con "causas." y la explicacion con "explicacion."~n'),
+    esperar_comando.
+
+% Salir del bucle de comandos
+salir :- 
+    format('~nSesion terminada.~n'), !, halt.
