@@ -4,13 +4,14 @@
 :- dynamic evidencia/1.
 :- dynamic relacion/2.
 :- dynamic sistema_cargado/1.
+:- dynamic hecho_observado/1.
 
 % Preguntar si un efecto se presenta
 preguntar(Efecto) :- 
     not(preguntada(Efecto)),
     (   respuesta(Efecto) -> assertz(evidencia(Efecto)), assertz(preguntada(Efecto))
     ;   respuesta(no(Efecto)) -> assertz(preguntada(Efecto))
-    ;   format('~n?Se presenta este problema/efecto: ~w? (si/no) ', [Efecto]),
+    ;   format('~n¿Se presenta este problema/efecto: ~w? (si/no) ', [Efecto]),
         read(Respuesta),
         (   Respuesta == si -> assertz(respuesta(Efecto)), assertz(evidencia(Efecto))
         ;   Respuesta == no -> assertz(respuesta(no(Efecto)))
@@ -38,7 +39,7 @@ iniciar :-
             findall(Efecto, averia(Subsistema, Efecto), Efectos),
             (   Efectos \= [] ->
                 forall(member(Efecto, Efectos), preguntar(Efecto))
-            ;   true
+            ;   format('No hay efectos para el subsistema: ~w~n', [Subsistema])
             )
         )
     ),
@@ -67,7 +68,10 @@ explicacion :-
         (   format('Causa probable: ~w~n', [Causa]),
             relacion(Causa, EfectosEsperados),
             findall(Efecto, (member(Efecto, EfectosEsperados), evidencia(Efecto)), Evidencias),
-            format('Porque presenta estos efectos: ~w~n', [Evidencias])
+            (   Evidencias \= [] ->
+                format('Porque presenta estos efectos: ~w~n', [Evidencias])
+            ;   format('No se encontraron efectos asociados para la causa: ~w~n', [Causa])
+            )
         )).
 
 % Esperar comando del usuario
@@ -81,7 +85,7 @@ esperar_comando :-
 
 % Iniciar una nueva sesion
 nueva_sesion :- 
-    format('~n?Desea iniciar una nueva sesion? (si/no) '),
+    format('~n¿Desea iniciar una nueva sesion? (si/no) '),
     read(Respuesta),
     (   Respuesta == si -> main
     ;   format('~nSesion terminada.~n')
@@ -89,10 +93,16 @@ nueva_sesion :-
 
 % Predicado principal para iniciar el programa manualmente
 main :- 
+    retractall(preguntada(_)),
+    retractall(respuesta(_)),
+    retractall(causas_probables(_)),
+    retractall(evidencia(_)),
+    retractall(sistema_cargado(_)),
+    retractall(hecho_observado(_)),
     format('~n~`=t~60|~nBienvenido al sistema de diagnostico de averias.~n~`=t~60|~n'),
     format('Cargue un sistema (ponga el nombre del archivo sin extension): '),
     read(ArchivoSistema),
-    atom_concat('C:/Users/Chenhui/OneDrive/Escritorio/Paz/', ArchivoSistema, RutaSistema),
+    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', ArchivoSistema, RutaSistema),
     atom_concat(RutaSistema, '.pl', RutaCompletaSistema),
     consult(RutaCompletaSistema),
     assertz(sistema_cargado(ArchivoSistema)),
@@ -100,26 +110,36 @@ main :-
     format('?Desea cargar hechos observados desde un archivo? (si/no) '),
     read(RespuestaHechos),
     (   RespuestaHechos == si -> cargar_hechos
-    ;   true
+    ;   iniciar
     ),
-    iniciar,
     nueva_sesion.
 
 % Cargar hechos observados desde un archivo
 cargar_hechos :- 
     format('Ingrese el nombre del archivo de hechos observados (sin extension): '),
     read(Archivo),
-    atom_concat('C:/Users/Chenhui/OneDrive/Escritorio/Paz/', Archivo, Ruta),
+    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', Archivo, Ruta),
     atom_concat(Ruta, '.pl', RutaCompleta),
     consult(RutaCompleta),
-    (   verificar_compatibilidad(Archivo) ->
-        format('Hechos observados cargados desde ~w.pl~n', [Archivo]),
-        iniciar
-    ;   format('Error: Los hechos observados no son compatibles con el sistema cargado.~n'),
-        cargar_hechos
-    ).
+    format('Hechos observados cargados desde ~w.pl~n', [Archivo]),
+    registrar_hechos_observados,
+    iniciar_diagnostico.
 
-% Verificar compatibilidad de los hechos observados con el sistema cargado
-verificar_compatibilidad(ArchivoHechos) :-
-    sistema_cargado(Sistema),
-    atom_concat(Sistema, '_hechos', ArchivoHechos).
+% Registrar hechos observados como respuestas
+registrar_hechos_observados :-
+    retractall(hecho_observado(_)), % Limpiar hechos observados anteriores
+    retractall(respuesta(_)), % Limpiar respuestas anteriores
+    findall(Efecto, respuesta(Efecto), EfectosObservados),
+    forall(member(Efecto, EfectosObservados), assertz(hecho_observado(Efecto))).
+
+% Iniciar diagnostico sin hacer preguntas
+iniciar_diagnostico :- 
+    retractall(preguntada(_)),
+    retractall(causas_probables(_)),
+    retractall(evidencia(_)),
+    findall(Efecto, hecho_observado(Efecto), Efectos),
+    forall(member(Efecto, Efectos), 
+        (   assertz(evidencia(Efecto)), assertz(preguntada(Efecto))
+        )
+    ),
+    format('Diagnostico completado.~nPuede solicitar las posibles causas con "causas." y la explicacion con "explicacion."~n').
