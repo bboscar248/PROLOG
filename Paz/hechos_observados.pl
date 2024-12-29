@@ -1,4 +1,7 @@
 % Hechos observados
+:- dynamic respuesta/1.
+
+% Respuestas observadas
 respuesta(vibraciones_volante).
 respuesta(no(ruido_al_girar)).
 respuesta(no(direccion_dura)).
