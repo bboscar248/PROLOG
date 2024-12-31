@@ -117,6 +117,7 @@ main :-
     ),
     esperar_comando.
 
+
 % Cargar hechos observados desde un archivo
 cargar_hechos :- 
     format('Ingrese el nombre del archivo de hechos observados (sin extension): '),
