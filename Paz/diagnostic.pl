@@ -122,25 +122,42 @@ main :-
     (   RespuestaHechos == si -> cargar_hechos
     ;   iniciar
     ),
+
+    % Después de haber ejecutado o bien el predicado cargar_hechos o bien el predicado iniciar, ejecutamos el predicado esperar_comando
     esperar_comando.
 
 
 % Cargar hechos observados desde un archivo
 cargar_hechos :- 
-    format('Ingrese el nombre del archivo de hechos observados (sin extension): '),
+
+    % Cargamos los hechos observados al sistema
+    format('Ingrese el nombre del archivo de hechos observados (con extension .pl): '),
     read(Archivo),
     atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', Archivo, Ruta),
-    atom_concat(Ruta, '.pl', RutaCompleta),
-    consult(RutaCompleta),
+    consult(Ruta),
+
+    % Mensaje para decir al usuario que los hechos observados han sigo cargados correctamente
     format('Hechos observados cargados desde ~w.pl~n', [Archivo]),
+
+    % Predicados para guardar los hechos observados como respuestas
     registrar_hechos_observados,
+
+    % Iniciar el diagnóstico sin la necesidad de hacer preguntar al usuario
     iniciar_diagnostico.
+
 
 % Registrar hechos observados como respuestas
 registrar_hechos_observados :-
-    retractall(hecho_observado(_)), % Limpiar hechos observados anteriores
+
+    % Limpiar hechos observados anteriormente
+    retractall(hecho_observado(_)), 
+
+    % Recogemos los efectos afirmativos 
     findall(Efecto, respuesta(Efecto), EfectosObservados),
+
+    % Añadimos cada efecto observado como un hecho 
     forall(member(Efecto, EfectosObservados), assertz(hecho_observado(Efecto))).
+
 
 % Iniciar diagnostico sin hacer preguntas
 iniciar_diagnostico :- 
@@ -154,6 +171,7 @@ iniciar_diagnostico :-
     ),
     format('Diagnostico completado.~nPuede solicitar las posibles causas con "causas." y la explicacion con "explicacion."~n'),
     esperar_comando.
+
 
 % Salir del bucle de comandos
 salir :- 
