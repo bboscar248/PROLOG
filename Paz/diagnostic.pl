@@ -3,7 +3,6 @@
 :- dynamic causas_probables/1.
 :- dynamic evidencia/1.
 :- dynamic relacion/2.
-:- dynamic sistema_cargado/1.
 :- dynamic hecho_observado/1.
 
 % Preguntar si un efecto se presenta
@@ -96,21 +95,29 @@ nueva_sesion :-
 
 % Predicado principal para iniciar el programa manualmente
 main :- 
+    % Hacemos un clean de todos los predicados para asegurarnos que el sistema comience desde 0
     retractall(preguntada(_)),
     retractall(respuesta(_)),
     retractall(causas_probables(_)),
     retractall(evidencia(_)),
-    retractall(sistema_cargado(_)),
     retractall(hecho_observado(_)),
+
+    % Le damos la bienvenida al usuario
     format('~n~`=t~60|~nBienvenido al sistema de diagnostico de averias.~n~`=t~60|~n'),
-    format('Cargue un sistema (ponga el nombre del archivo sin extension): '),
+
+    % Cargamos la base de conocimiento al sistema
+    format('Cargue un sistema (ponga el nombre del archivo con extension .pl): '),
     read(ArchivoSistema),
     atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', ArchivoSistema, RutaSistema),
-    atom_concat(RutaSistema, '.pl', RutaCompletaSistema),
-    consult(RutaCompletaSistema),
-    assertz(sistema_cargado(ArchivoSistema)),
+    consult(RutaSistema),
+
+    % Mensaje para decir al usuario que el dominio ha sigo cargado correctamente
     format('Archivo ~w.pl cargado correctamente.~n', [ArchivoSistema]),
-    format('?Desea cargar hechos observados desde un archivo? (si/no) '),
+
+    % Preguntamos si quiere cargar hechos observados, es decir, directamente los efectos/averías que haya observado
+    format('¿Desea cargar hechos observados desde un archivo? (si/no) '),
+
+    % Leemos si la respuesta es si o no
     read(RespuestaHechos),
     (   RespuestaHechos == si -> cargar_hechos
     ;   iniciar
