@@ -5,7 +5,7 @@
 respuesta(no_calienta).
 respuesta(no(no_encieden)).
 respuesta(no(hace_ruido)).
-respuesta(no(fuga_de_gas)).
+respuesta(fuga_de_gas).
 respuesta(no(no_enfria)).
 respuesta(no(fuga_de_agua)).
 respuesta(no(llama_baja)).
