@@ -31,6 +31,9 @@ preguntar(Efecto) :-
     % Finalmente, marcamos que la pregunta ha sido realizada
     assertz(preguntada(Efecto)).
 
+% Cuando la pregunta ya fue preguntada, no hacemos nada
+preguntar(_) :- 
+    true.
 
 
 % Verificar si un efecto ya fue preguntado
@@ -120,6 +123,7 @@ esperar_comando :-
     ;   format('Comando no reconocido. Por favor, intente de nuevo.~n'), esperar_comando
     ).
 
+
 % Iniciar una nueva sesion
 nueva_sesion :- 
     format('~n¿Desea iniciar una nueva sesion? (si/no) '),
@@ -127,6 +131,7 @@ nueva_sesion :-
     (   Respuesta == si -> main
     ;   salir
     ).
+
 
 % Predicado principal para iniciar el programa manualmente
 main :- 
@@ -143,7 +148,7 @@ main :-
     % Cargamos la base de conocimiento al sistema
     format('Cargue un sistema (ponga el nombre del archivo con extension .pl): '),
     read(ArchivoSistema),
-    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', ArchivoSistema, RutaSistema),
+    atom_concat('C:/Users/usuari/OneDrive/Escritorio/Practica/Paz/', ArchivoSistema, RutaSistema),
     consult(RutaSistema),
 
     % Mensaje para decir al usuario que el dominio ha sigo cargado correctamente
@@ -168,7 +173,7 @@ cargar_hechos :-
     % Cargamos los hechos observados al sistema
     format('Ingrese el nombre del archivo de hechos observados (con extension .pl): '),
     read(Archivo),
-    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', Archivo, Ruta),
+    atom_concat('C:/Users/usuari/OneDrive/Escritorio/Practica/Paz/', Archivo, Ruta),
     consult(Ruta),
 
     % Mensaje para decir al usuario que los hechos observados han sigo cargados correctamente
