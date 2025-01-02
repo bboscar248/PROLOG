@@ -146,10 +146,10 @@ main :-
     format('~n~`=t~60|~nBienvenido al sistema de diagnostico de averias.~n~`=t~60|~n'),
 
     % Cargamos la base de conocimiento al sistema
-    format('Cargue un sistema (ponga el nombre del archivo con extension .pl): '),
+    format('Cargue un sistema (ponga el nombre del archivo sin extension .pl): '),
     read(ArchivoSistema),
     atom_concat(ArchivoSistema, '.pl', RutaCompletaSistema),
-    atom_concat('C:/Users/usuari/OneDrive/Escritorio/Practica/Paz/', RutaCompletaSistema, RutaSistema),
+    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', RutaCompletaSistema, RutaSistema),
     consult(RutaSistema),
 
     % Mensaje para decir al usuario que el dominio ha sigo cargado correctamente
@@ -172,10 +172,10 @@ main :-
 cargar_hechos :- 
 
     % Cargamos los hechos observados al sistema
-    format('Ingrese el nombre del archivo de hechos observados (con extension .pl): '),
+    format('Ingrese el nombre del archivo de hechos observados (sin extension .pl): '),
     read(Archivo),
     atom_concat(Archivo, '.pl', RutaCompleta),
-    atom_concat('C:/Users/usuari/OneDrive/Escritorio/Practica/Paz/', RutaCompleta, Ruta),
+    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', RutaCompleta, Ruta),
     consult(Ruta),
 
     % Mensaje para decir al usuario que los hechos observados han sigo cargados correctamente

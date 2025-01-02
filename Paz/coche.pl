@@ -9,7 +9,7 @@
 % Subsistemes en buen funcionamiento
 subsistema(coche, direccion).
 subsistema(coche, transmission).
-subsistema(coche, encendido).
+subsistema(coche, encesa).
 subsistema(coche, sistema_electrico).
 subsistema(coche, sistema_confort_interior).
 
@@ -98,21 +98,20 @@ relacion(soportes_del_motor_desgastados, [vibraciones_al_conducir]).
 
 % Encendido
 % Averias/efectos/observaciones del subsistema de encendido
-averia(encendido, el_motor_no_arranca).
-averia(encendido, ralenti_irregular).
-averia(encendido, consumo_excesivo_combustible).
-averia(encendido, detonaciones).
-averia(encendido, perdida_de_potencia).
-averia(encendido, chispa_debil). 
+averia(encesa, el_motor_no_arranca).
+averia(encesa, ralenti_irregular).
+averia(encesa, consumo_excesivo_combustible).
+averia(encesa, detonaciones).
+averia(encesa, perdida_de_potencia).
+averia(encesa, chispa_debil). 
 
 % Causas posibles de fallos del coche del subsistema de encendido
-causa(encendido, bujias_desgastadas).
-causa(encendido, cables_de_bujias_danados).
-causa(encendido, bobina_de_encendido_fallida).
-causa(encendido, fallo_del_sensor_de_ciguenal).
-causa(encendido, distribuidor_defectuoso).
-causa(encendido, mezcla_combustible_pobre).
-causa(encendido, regulador_de_voltaje_defectuoso).
+causa(encesa, bujias_desgastadas).
+causa(encesa, cables_de_bujias_danados).
+causa(encesa, bobina_de_encendido_fallida).
+causa(encesa, fallo_del_sensor_de_ciguenal).
+causa(encesa, distribuidor_defectuoso).
+causa(encesa, mezcla_combustible_pobre).
 
 % Reglas que relacionan causas y efectos del subsistema de encendido
 relacion(bujias_desgastadas, [el_motor_no_arranca, ralenti_irregular, chispa_debil]).
@@ -122,8 +121,6 @@ relacion(fallo_del_sensor_de_ciguenal, [el_motor_no_arranca]).
 relacion(distribuidor_defectuoso, [detonaciones, ralenti_irregular]).
 relacion(mezcla_combustible_pobre, [consumo_excesivo_combustible, perdida_de_potencia]).
 relacion(bujias_desgastadas, [consumo_excesivo_combustible]).
-relacion(regulador_de_voltaje_defectuoso, [chispa_debil]).
-
 
 
 
@@ -161,7 +158,7 @@ relacion(cortocircuito, [cortocircuitos, sobrecalentamiento_cables]).
 % Avarias/efectos/observaciones del subsistema de confort interior
 averia(sistema_confort_interior, fallos_en_el_sistema_de_climatizacion).
 averia(sistema_confort_interior, problemas_en_el_sistema_de_audio).
-averia(sistema_confort_interior, dificultades_para_subir_y_bajar_las_ventanas).
+averia(sistema_confort_interior, problema_para_subir_y_bajar_las_ventanas).
 averia(sistema_confort_interior, no_se_ajustan_los_asientos).
 averia(sistema_confort_interior, no_funciona_el_cierre_centralizado).
 averia(sistema_confort_interior, no_funciona_las_luces_interiores). 
@@ -187,13 +184,13 @@ relacion(fugas_de_refrigerante, [fallos_en_el_sistema_de_climatizacion]).
 relacion(compresor_defectuoso, [fallos_en_el_sistema_de_climatizacion]).
 relacion(sensor_de_temperatura_defectuoso, [fallos_en_el_sistema_de_climatizacion]).
 relacion(obstruccion_en_las_salidas_de_aire, [fallos_en_el_sistema_de_climatizacion]).
-relacion(fusible_fundido, [fallos_en_el_sistema_de_climatizacion, problemas_en_el_sistema_de_audio, dificultades_para_subir_y_bajar_las_ventanas, no_se_ajustan_los_asientos, no_funciona_el_cierre_centralizado, no_funciona_las_luces_interiores]).
-relacion(problema_de_cables, [problemas_en_el_sistema_de_audio, no_funciona_las_luces_interiores, dificultades_para_subir_y_bajar_las_ventanas, no_funciona_el_cierre_centralizado]).
+relacion(fusible_fundido, [fallos_en_el_sistema_de_climatizacion, problemas_en_el_sistema_de_audio, problema_para_subir_y_bajar_las_ventanas, no_se_ajustan_los_asientos, no_funciona_el_cierre_centralizado, no_funciona_las_luces_interiores]).
+relacion(problema_de_cables, [problemas_en_el_sistema_de_audio, no_funciona_las_luces_interiores, problema_para_subir_y_bajar_las_ventanas, no_funciona_el_cierre_centralizado]).
 relacion(amplificador_roto, [problemas_en_el_sistema_de_audio]).
-relacion(rotura_del_mecanismo_del_elevalunas, [dificultades_para_subir_y_bajar_las_ventanas]).
-relacion(acumulacion_de_suciedad, [dificultades_para_subir_y_bajar_las_ventanas]).
-relacion(no_funciona_el_motor_de_elevacion, [dificultades_para_subir_y_bajar_las_ventanas]).
+relacion(rotura_del_mecanismo_del_elevalunas, [problema_para_subir_y_bajar_las_ventanas]).
+relacion(acumulacion_de_suciedad, [problema_para_subir_y_bajar_las_ventanas]).
+relacion(no_funciona_el_motor_de_elevacion, [problema_para_subir_y_bajar_las_ventanas]).
 relacion(palanca_del_asiento_danada, [no_se_ajustan_los_asientos]).
-relacion(piezas_danadas, [fallos_en_el_sistema_de_climatizacion, problemas_en_el_sistema_de_audio, dificultades_para_subir_y_bajar_las_ventanas, no_se_ajustan_los_asientos, no_funciona_el_cierre_centralizado, no_funciona_las_luces_interiores]).
-relacion(motor_electrico_averiado, [no_se_ajustan_los_asientos, dificultades_para_subir_y_bajar_las_ventanas, no_funciona_el_cierre_centralizado]).
+relacion(piezas_danadas, [fallos_en_el_sistema_de_climatizacion, problemas_en_el_sistema_de_audio, problema_para_subir_y_bajar_las_ventanas, no_se_ajustan_los_asientos, no_funciona_el_cierre_centralizado, no_funciona_las_luces_interiores]).
+relacion(motor_electrico_averiado, [no_se_ajustan_los_asientos, problema_para_subir_y_bajar_las_ventanas, no_funciona_el_cierre_centralizado]).
 relacion(problema_con_el_solenoide, [no_funciona_el_cierre_centralizado]).
