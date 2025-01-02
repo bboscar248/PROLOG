@@ -7,25 +7,62 @@
 
 % Preguntar si un efecto se presenta
 preguntar(Efecto) :- 
+
+    % Comprobar que la pregunta no haya sido preguntada antes
     not(preguntada(Efecto)),
-    (   respuesta(Efecto) -> assertz(evidencia(Efecto)), assertz(preguntada(Efecto))
-    ;   respuesta(no(Efecto)) -> assertz(preguntada(Efecto))
-    ;   format('~n¿Se presenta este problema/efecto: ~w? (si/no) ', [Efecto]),
+
+    % Si la respuesta es afirmativa
+    (   respuesta(Efecto) -> 
+    
+        % Se guarda la evidencia de que el efecto ha sido observado
+        assertz(evidencia(Efecto)), 
+        
+        % Se marca que el efecto ha sido preguntado para evitar futuras preguntas sobre el mismo efecto
+        assertz(preguntada(Efecto))
+
+    ;
+
+    % Si la respuesta es negativa
+        respuesta(no(Efecto)) -> 
+        
+        % Se marca que el efecto ha sido preguntado y no está presente
+        assertz(preguntada(Efecto))
+    ;   
+
+        % Si el efecto no ha sido respondido previamente, se pregunta al usuario
+        format('~n¿Se presenta este problema/efecto: ~w? (si/no) ', [Efecto]),
+        
+        % Leemos la respuesta del usuario, que puede ser si. o no.
         read(Respuesta),
-        (   Respuesta == si -> assertz(respuesta(Efecto)), assertz(evidencia(Efecto))
-        ;   Respuesta == no -> assertz(respuesta(no(Efecto)))
+
+        % Si la respuesta es si., registramos que el efecto está presente y lo añadimos como evidencia
+        (   Respuesta == si -> 
+            assertz(respuesta(Efecto)), 
+            assertz(evidencia(Efecto))
+        ;   
+        
+        % Si la respuesta es no., registramos que el efecto no está presente
+        Respuesta == no -> 
+            assertz(respuesta(no(Efecto)))
         ),
+
+        % Finalmente, marcamos que la pregunta ha sido realizada
         assertz(preguntada(Efecto))
     ).
+
+
 
 preguntar(_) :- 
     true. % No hacer nada si ya fue preguntada
 
+
 % Verificar si un efecto ya fue preguntado
 preguntada(Efecto) :- 
     respuesta(Efecto).
+
 preguntada(Efecto) :- 
     respuesta(no(Efecto)).
+
 
 % Iniciar diagnostico
 iniciar :- 
