@@ -30,39 +30,39 @@ preguntada(Efecto) :-
 % Iniciar diagnostico
 iniciar :- 
 
-    % Esborrar tota la informació anterior
+    % Borrar toda la información anterior 
     retractall(preguntada(_)),
     retractall(causas_probables(_)),
     retractall(evidencia(_)),
 
-    % Recollir tots els subsistemes
+    % Recoger todos los subsistemas
     findall(Subsistema, subsistema(_, Subsistema), Subsistemas),
 
     % Iterar sobre cada subsistema
     forall(member(Subsistema, Subsistemas), 
         (   
-            % Mostrar títol per al subsistema actual
+            % Enseñar el título para el subsistema actual
             format('~n~`=t~60|~nPreguntas para el subsistema: ~w~n~`=t~60|~n', [Subsistema]),
             
-            % Recollir tots els efectes (avaries) del subsistema
+            % Recoger todos los efectos (averías) del subsistema 
             findall(Efecto, averia(Subsistema, Efecto), Efectos),
 
-            % Si hi ha efectes, cridar preguntar per a cada efecte
+            % Si hay efectos, llamar a <preguntar> para cada efecto 
             (   Efectos \= [] ->
                 forall(member(Efecto, Efectos), preguntar(Efecto))
-            ;   % Si no hi ha efectes, mostrar missatge indicant-ho
+            ;   % Si no hay efectos, enseñar un mensaje indicándolo 
                 format('No hay efectos para el subsistema: ~w~n', [Subsistema])
             )
         )
     ),
 
-    % Mostrar missatge de finalització del diagnòstic
+    % Enseñar mensaje de finalización del diagnóstico
     format('~n~`=t~60|~nDiagnostico completado.~nPuede solicitar las posibles causas con "causas." y la explicacion con "explicacion."~n~`=t~60|~n'),
     
-    % Esperar comandament
+    % Esperar que el usuario haga algo
     esperar_comando.
 
-    
+
 
 % Identificar causas probables y mostrarlas
 causas :- 
