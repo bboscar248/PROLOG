@@ -148,7 +148,8 @@ main :-
     % Cargamos la base de conocimiento al sistema
     format('Cargue un sistema (ponga el nombre del archivo con extension .pl): '),
     read(ArchivoSistema),
-    atom_concat('C:/Users/usuari/OneDrive/Escritorio/Practica/Paz/', ArchivoSistema, RutaSistema),
+    atom_concat(ArchivoSistema, '.pl', RutaCompletaSistema),
+    atom_concat('C:/Users/usuari/OneDrive/Escritorio/Practica/Paz/', RutaCompletaSistema, RutaSistema),
     consult(RutaSistema),
 
     % Mensaje para decir al usuario que el dominio ha sigo cargado correctamente
@@ -173,7 +174,8 @@ cargar_hechos :-
     % Cargamos los hechos observados al sistema
     format('Ingrese el nombre del archivo de hechos observados (con extension .pl): '),
     read(Archivo),
-    atom_concat('C:/Users/usuari/OneDrive/Escritorio/Practica/Paz/', Archivo, Ruta),
+    atom_concat(Archivo, '.pl', RutaCompleta),
+    atom_concat('C:/Users/usuari/OneDrive/Escritorio/Practica/Paz/', RutaCompleta, Ruta),
     consult(Ruta),
 
     % Mensaje para decir al usuario que los hechos observados han sigo cargados correctamente
