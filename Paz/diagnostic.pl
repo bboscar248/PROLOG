@@ -29,21 +29,40 @@ preguntada(Efecto) :-
 
 % Iniciar diagnostico
 iniciar :- 
+
+    % Esborrar tota la informació anterior
     retractall(preguntada(_)),
     retractall(causas_probables(_)),
     retractall(evidencia(_)),
+
+    % Recollir tots els subsistemes
     findall(Subsistema, subsistema(_, Subsistema), Subsistemas),
+
+    % Iterar sobre cada subsistema
     forall(member(Subsistema, Subsistemas), 
-        (   format('~n~`=t~60|~nPreguntas para el subsistema: ~w~n~`=t~60|~n', [Subsistema]),
+        (   
+            % Mostrar títol per al subsistema actual
+            format('~n~`=t~60|~nPreguntas para el subsistema: ~w~n~`=t~60|~n', [Subsistema]),
+            
+            % Recollir tots els efectes (avaries) del subsistema
             findall(Efecto, averia(Subsistema, Efecto), Efectos),
+
+            % Si hi ha efectes, cridar preguntar per a cada efecte
             (   Efectos \= [] ->
                 forall(member(Efecto, Efectos), preguntar(Efecto))
-            ;   format('No hay efectos para el subsistema: ~w~n', [Subsistema])
+            ;   % Si no hi ha efectes, mostrar missatge indicant-ho
+                format('No hay efectos para el subsistema: ~w~n', [Subsistema])
             )
         )
     ),
+
+    % Mostrar missatge de finalització del diagnòstic
     format('~n~`=t~60|~nDiagnostico completado.~nPuede solicitar las posibles causas con "causas." y la explicacion con "explicacion."~n~`=t~60|~n'),
+    
+    % Esperar comandament
     esperar_comando.
+
+    
 
 % Identificar causas probables y mostrarlas
 causas :- 
@@ -159,17 +178,28 @@ registrar_hechos_observados :-
     forall(member(Efecto, EfectosObservados), assertz(hecho_observado(Efecto))).
 
 
-% Iniciar diagnostico sin hacer preguntas
+% Iniciar diagnostico sin hacer preguntas al usuario
 iniciar_diagnostico :- 
+
+    % Borramos cualquier información anterior sobre preguntas, causas probables y evidencias 
     retractall(preguntada(_)),
     retractall(causas_probables(_)),
     retractall(evidencia(_)),
+
+    % Recogemos todos los efectos observados cargados (respuestas afirmativas!)
     findall(Efecto, hecho_observado(Efecto), Efectos),
+
+    % Añadimos los efectos observados como evidencia y los marcamos como preguntadas 
     forall(member(Efecto, Efectos), 
-        (   assertz(evidencia(Efecto)), assertz(preguntada(Efecto))
+        (   assertz(evidencia(Efecto)), % Añadimos el efecto como evidencia
+            assertz(preguntada(Efecto)) % Marcamos el efecto como preguntado
         )
     ),
+
+    % Enseñamos un mensaje final indicando que el diagnóstico se ha completado 
     format('Diagnostico completado.~nPuede solicitar las posibles causas con "causas." y la explicacion con "explicacion."~n'),
+
+    % Esperamos el siguiente comando del usuario 
     esperar_comando.
 
 
