@@ -153,13 +153,10 @@ main :-
     consult(RutaSistema),
 
     % Mensaje para decir al usuario que el dominio ha sigo cargado correctamente
-<<<<<<< HEAD
     atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', ArchivoSistema, RutaSistema),
     atom_concat(RutaSistema, '.pl', RutaCompletaSistema),
     consult(RutaCompletaSistema),
     assertz(sistema_cargado(ArchivoSistema)),
-=======
->>>>>>> 264426689c3e7ff197458615ab6a92408c14733c
     format('Archivo ~w.pl cargado correctamente.~n', [ArchivoSistema]),
 
     % Preguntamos si quiere cargar hechos observados, es decir, directamente los efectos/averías que haya observado
