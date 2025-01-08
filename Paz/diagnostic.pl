@@ -85,7 +85,7 @@ iniciar :-
 
 % Identificar causas probables y mostrarlas
 causas :- 
-    findall(Causa, (causa(_, Causa), relacion(Causa, EfectosEsperados), member(Efecto, EfectosEsperados), respuesta(Efecto)), CausasDuplicadas),
+    findall(Causa, (causa(_, Causa), relacion(Causa, EfectosEsperados), forall(member(Efecto, EfectosEsperados), respuesta(Efecto)), CausasDuplicadas),
     sort(CausasDuplicadas, CausasProbables),
     (   CausasProbables \= [] ->
         retractall(causas_probables(_)),
