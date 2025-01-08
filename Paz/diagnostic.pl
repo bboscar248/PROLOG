@@ -83,8 +83,7 @@ iniciar :-
 
 
 
-% Identificar causas probables y mostrarlas
-% filepath: /c:/Users/luosc/OneDrive/Escritorio/Practica/Paz/pg.pl
+
 % Identificar causas probables y mostrarlas
 causas :- 
     findall(Causa, 
