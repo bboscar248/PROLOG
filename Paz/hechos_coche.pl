@@ -7,7 +7,7 @@ respuesta(no(ruido_al_girar)).
 respuesta(no(direccion_dura)).
 respuesta(no(coche_no_gira)).
 respuesta(no(desviacion_hacia_un_lado)).
-respuesta(no(dificultad_para_cambiar_marchas)).
+respuesta(dificultad_para_cambiar_marchas).
 respuesta(no(perdida_de_potencia)).
 respuesta(no(ruidos_extranos_en_la_caja)).
 respuesta(no(vibraciones_en_el_piso)).
