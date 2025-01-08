@@ -148,11 +148,18 @@ main :-
     % Cargamos la base de conocimiento al sistema
     format('Cargue un sistema (ponga el nombre del archivo sin extension .pl): '),
     read(ArchivoSistema),
+<<<<<<< Updated upstream:Paz/diagnostic.pl
     atom_concat(ArchivoSistema, '.pl', RutaCompletaSistema),
     atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', RutaCompletaSistema, RutaSistema),
     consult(RutaSistema),
 
     % Mensaje para decir al usuario que el dominio ha sigo cargado correctamente
+=======
+    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', ArchivoSistema, RutaSistema),
+    atom_concat(RutaSistema, '.pl', RutaCompletaSistema),
+    consult(RutaCompletaSistema),
+    assertz(sistema_cargado(ArchivoSistema)),
+>>>>>>> Stashed changes:Paz/pg.pl
     format('Archivo ~w.pl cargado correctamente.~n', [ArchivoSistema]),
 
     % Preguntamos si quiere cargar hechos observados, es decir, directamente los efectos/averías que haya observado
@@ -174,11 +181,17 @@ cargar_hechos :-
     % Cargamos los hechos observados al sistema
     format('Ingrese el nombre del archivo de hechos observados (sin extension .pl): '),
     read(Archivo),
+<<<<<<< Updated upstream:Paz/diagnostic.pl
     atom_concat(Archivo, '.pl', RutaCompleta),
     atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', RutaCompleta, Ruta),
     consult(Ruta),
 
     % Mensaje para decir al usuario que los hechos observados han sigo cargados correctamente
+=======
+    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', Archivo, Ruta),
+    atom_concat(Ruta, '.pl', RutaCompleta),
+    consult(RutaCompleta),
+>>>>>>> Stashed changes:Paz/pg.pl
     format('Hechos observados cargados desde ~w.pl~n', [Archivo]),
 
     % Predicados para guardar los hechos observados como respuestas
