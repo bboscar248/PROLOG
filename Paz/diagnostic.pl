@@ -186,7 +186,7 @@ cargar_hechos :-
     format('Ingrese el nombre del archivo de hechos observados (sin extension .pl): '),
     read(Archivo),
     atom_concat(Archivo, '.pl', RutaCompleta),
-    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', RutaCompleta, Ruta),
+    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', RutaCompleta, Ruta),
     consult(Ruta),
 
     % Mensaje para decir al usuario que los hechos observados han sigo cargados correctamente
