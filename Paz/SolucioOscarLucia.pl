@@ -83,7 +83,8 @@ iniciar :-
 
 
 
-
+% Identificar causas probables y mostrarlas
+% filepath: /c:/Users/luosc/OneDrive/Escritorio/Practica/Paz/pg.pl
 % Identificar causas probables y mostrarlas
 causas :- 
     findall(Causa, 
@@ -156,14 +157,10 @@ main :-
     format('Cargue un sistema (ponga el nombre del archivo sin extension .pl): '),
     read(ArchivoSistema),
     atom_concat(ArchivoSistema, '.pl', RutaCompletaSistema),
-    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', RutaCompletaSistema, RutaSistema),
+    atom_concat('C:/Users/luosc/OneDrive/Escritorio/Practica/Paz/', RutaCompletaSistema, RutaSistema),
     consult(RutaSistema),
-    
+
     % Mensaje para decir al usuario que el dominio ha sigo cargado correctamente
-    atom_concat('C:/Users/Chenhui/OneDrive/Documentos/GitHub/dataosc/PROLOG/Paz/', ArchivoSistema, RutaSistema),
-    atom_concat(RutaSistema, '.pl', RutaCompletaSistema),
-    consult(RutaCompletaSistema),
-    assertz(sistema_cargado(ArchivoSistema)),
     format('Archivo ~w.pl cargado correctamente.~n', [ArchivoSistema]),
 
     % Preguntamos si quiere cargar hechos observados, es decir, directamente los efectos/averías que haya observado
